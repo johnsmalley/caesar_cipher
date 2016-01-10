@@ -12,24 +12,29 @@ puts "Enter a number for the amount of charters your message should get" +
 	 " shifted by"
 shift = gets.chomp
 
-count = 0
-input_message.each_char do |char|
-	new_position = char.ord + shift.to_i
 
-	if char.ord.between?(65, 90)
-		while new_position > 90
-			new_position -= 26
+
+def caesar_cipher(message, shift)
+	count = 0
+	message.each_char do |char|
+		new_position = char.ord + shift.to_i
+
+		if char.ord.between?(65, 90)
+			while new_position > 90 # needed if shift is over 26
+				new_position -= 26 # 26 letters in the alphabet
+			end
+			message[count] = new_position.chr
+		elsif char.ord.between?(97, 122)
+			while new_position > 122 #needed if shift is over 26
+				new_position -= 26 # 26 letters in the alphabet
+			end
+			message[count] = new_position.chr
 		end
-		input_message[count] = new_position.chr
-	elsif char.ord.between?(97, 122)
-		while new_position > 122
-			new_position -= 26
-		end
-		input_message[count] = new_position.chr
+		count += 1
 	end
-	count += 1
+	puts message	
 end
 
 puts "Your new disguised message is shown below"
-puts input_message
+caesar_cipher(input_message, shift)
 
